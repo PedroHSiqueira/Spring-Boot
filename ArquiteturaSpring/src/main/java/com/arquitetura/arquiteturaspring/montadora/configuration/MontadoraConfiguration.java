@@ -2,11 +2,14 @@ package com.arquitetura.arquiteturaspring.montadora.configuration;
 
 import com.arquitetura.arquiteturaspring.montadora.Motor;
 import com.arquitetura.arquiteturaspring.montadora.TipoMotor;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
+@Scope(BeanDefinition.SCOPE_SINGLETON)  //Outros tipos: Request | Session | Application
 public class MontadoraConfiguration {
 
     @Bean(name = "motorAspirado")
