@@ -19,6 +19,7 @@ public class Application {
 		ConfigurableApplicationContext applicationContext = builder.context();
 
 		builder.profiles("producao");
+		// builder.lazyInitialization(true); // Beans só inicializados na hora que forem chamados
 
 		builder.run(args);
     }
