@@ -12,15 +12,29 @@ import org.springframework.core.env.ConfigurableEnvironment;
 public class Application {
 
 	public static void main(String[] args) {
-//		SpringApplication.run(Application.class, args);
+		//SpringApplication.run(Application.class, args);
 
-		SpringApplicationBuilder builder = new SpringApplicationBuilder(Application.class);
-		builder.bannerMode(Banner.Mode.OFF);
-		ConfigurableApplicationContext applicationContext = builder.context();
+		SpringApplicationBuilder builder =
+				new SpringApplicationBuilder(Application.class);
 
-		builder.profiles("producao");
-		// builder.lazyInitialization(true); // Beans só inicializados na hora que forem chamados
+		builder.bannerMode(Banner.Mode.LOG);
+		builder.profiles("producao", "homologacao");
+//		builder.lazyInitialization(true);
 
 		builder.run(args);
+
+
+		// contexto da aplicação já iniciada:
+		ConfigurableApplicationContext applicationContext = builder.context();
+//		var produtoRepository = applicationContext.getBean("produtoRepository");
+
+
+		ConfigurableEnvironment environment = applicationContext.getEnvironment();
+		String applicationName = environment.getProperty("spring.application.name");
+		System.out.println("Nome da aplicação: " + applicationName);
+
+		ExemploValue value = applicationContext.getBean(ExemploValue.class);
+		value.imprimirVariavel();
+
     }
 }

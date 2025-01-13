@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: arquiteturaspring
+  jpa:
+    show_sql: true
+  main:
+    lazy_initialization: false
+app:
+  config:
+    variavel: "Teste Variavel "

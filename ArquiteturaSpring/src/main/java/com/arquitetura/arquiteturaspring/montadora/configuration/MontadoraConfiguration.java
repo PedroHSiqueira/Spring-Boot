@@ -6,11 +6,11 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@Scope(BeanDefinition.SCOPE_SINGLETON)  //Outros tipos: Request | Session | Application
 public class MontadoraConfiguration {
 
     @Lazy(value = false) // Torna em um bean Lazy (iniciado na hora da chamada)
     @Bean(name = "motorAspirado")
+    @Scope(BeanDefinition.SCOPE_SINGLETON)  //Outros tipos: Request | Session | Application
     public Motor motorAspirado(){
         Motor motor = new Motor();
         motor.setCavalos(126);
