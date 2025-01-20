@@ -7,4 +7,5 @@ spring:
     lazy_initialization: false
 app:
   config:
-    variavel: "Teste Variavel "
+    variavel: "Teste Variavel"
+    valor1: 5000
