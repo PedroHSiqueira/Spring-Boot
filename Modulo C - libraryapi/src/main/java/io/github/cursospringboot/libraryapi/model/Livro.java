@@ -3,6 +3,7 @@ package io.github.cursospringboot.libraryapi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -29,8 +30,8 @@ public class Livro {
     @Column(name = "genero",length = 30, nullable = false)
     private GeneroLivro genero;
 
-    @Column(name = "preco", precision = 18)
-    private Double preco;
+    @Column(name = "preco", precision = 18, scale = 2)
+    private BigDecimal preco;
 
     @ManyToOne // Muitos livros para 1 autor
     @JoinColumn(name = "id_autor") // Relacionamento

@@ -6,3 +6,7 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true # Mostra o Sql No terminal
+    hibernate:
+      ddl-auto: update # Atualiza/Cria o banco automaticamente baseado no código
