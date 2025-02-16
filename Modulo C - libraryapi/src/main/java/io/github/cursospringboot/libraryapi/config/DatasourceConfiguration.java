@@ -43,7 +43,7 @@ public class DatasourceConfiguration {
 
         config.setMaximumPoolSize(10); // Maximo de conexões liberadas
         config.setMinimumIdle(1); // Quantidade Inicial de conexões
-        config.setPoolName("librery-db-pool");
+        config.setPoolName("library-db-pool");
         config.setMaxLifetime(600000); // (10 min em ms)
         config.setConnectionTimeout(100000); //Timeout para fazer uma Conexão
         config.setConnectionTestQuery("select 1"); // Query Teste
