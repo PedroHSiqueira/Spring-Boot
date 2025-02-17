@@ -36,4 +36,23 @@ public class LivroRepositoryTest {
 
       livroRepository.save(livro);
   }
+
+  @Test
+  public void salvarCascadeTest(){
+      Livro livro = new Livro();
+      livro.setIsbn("01234-56789");
+      livro.setPreco(BigDecimal.valueOf(100));
+      livro.setGenero(GeneroLivro.BIOGRAFIA);
+      livro.setTitulo("Openheimer, o pai das explosões");
+      livro.setDataPublicacao(LocalDate.of(2024,10,21));
+
+      Autor autor = new Autor();
+      autor.setNome("Warner Bross CO.");
+      autor.setNacionalidade("Americano");
+      autor.setDataNascimento(LocalDate.of(1988, 7, 10));
+
+      livro.setAutor(autor);
+
+      livroRepository.save(livro);
+  }
 }
