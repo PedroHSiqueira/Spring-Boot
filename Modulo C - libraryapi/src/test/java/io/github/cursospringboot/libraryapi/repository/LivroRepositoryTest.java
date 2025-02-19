@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -61,6 +62,26 @@ public class LivroRepositoryTest {
   public void listarTest(){
       List<Livro> livros = livroRepository.findAll();
       livros.forEach(System.out::println);
+  }
+
+  @Test
+  public void atualizarTest(){
+      UUID id = UUID.fromString("7345511f-26b6-4946-b2ce-41a088a034f1");
+
+      Optional<Livro> livroSelecionado = livroRepository.findById(id);
+
+      if (livroSelecionado.isPresent()){
+          Livro livroAtualizado = livroSelecionado.get();
+
+          System.out.println("Atualização dos Dados");
+          System.out.println("Preco Anterior: " + livroAtualizado.getPreco());
+
+          livroAtualizado.setPreco(BigDecimal.valueOf(105));
+
+          livroRepository.save(livroAtualizado);
+
+          System.out.println("Preco Atualizado: " + livroAtualizado.getPreco());
+      }
   }
 
   @Test
