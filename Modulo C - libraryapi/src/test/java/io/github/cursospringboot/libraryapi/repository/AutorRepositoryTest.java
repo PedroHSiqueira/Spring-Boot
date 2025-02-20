@@ -19,9 +19,9 @@ public class AutorRepositoryTest {
     @Test
     public void salvarTeste(){
         Autor autor = new Autor();
-        autor.setNome("Maria de Freitas");
-        autor.setNacionalidade("Brasileiro");
-        autor.setDataNascimento(LocalDate.of(1968, 8, 12));
+        autor.setNome("Universal");
+        autor.setNacionalidade("Americano");
+        autor.setDataNascimento(LocalDate.of(1915, 8, 12));
 
         Autor autorSalvo = autorRepository.save(autor);
         System.out.println("Autor Salvo: " + autorSalvo);

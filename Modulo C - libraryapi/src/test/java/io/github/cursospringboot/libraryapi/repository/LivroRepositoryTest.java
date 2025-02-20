@@ -85,6 +85,23 @@ public class LivroRepositoryTest {
   }
 
   @Test
+  public void atualizarAutorTest(){
+      UUID id = UUID.fromString("7345511f-26b6-4946-b2ce-41a088a034f1");
+      Optional<Livro> livroParaAtualizar = livroRepository.findById(id);
+
+      UUID idAutor = UUID.fromString("f0540d61-51ac-43a6-923a-0c7f2d55a27f");
+      Optional<Autor> novoAutor = autorRepository.findById(idAutor);
+
+      if (livroParaAtualizar.isPresent() && novoAutor.isPresent()){
+          Livro livroBanco = livroParaAtualizar.get();
+
+          livroBanco.setAutor(novoAutor.get());
+
+          livroRepository.save(livroBanco);
+      }
+  }
+
+  @Test
   public void deletarTest(){
       UUID idLivro = UUID.fromString("40e939e5-9157-4848-99cf-c75b7390b1f9");
       livroRepository.deleteById(idLivro);
