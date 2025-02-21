@@ -65,6 +65,17 @@ public class LivroRepositoryTest {
   }
 
   @Test
+  public void listarLivroAutorTest(){
+      UUID id = UUID.fromString("7345511f-26b6-4946-b2ce-41a088a034f1");
+      Livro livro = livroRepository.findById(id).orElse(null);
+
+      if (livro != null){
+          System.out.println("Livro: " + livro.getTitulo());
+          System.out.println("Autor: " + livro.getAutor().getNome());
+      }
+  }
+
+  @Test
   public void atualizarTest(){
       UUID id = UUID.fromString("7345511f-26b6-4946-b2ce-41a088a034f1");
 
