@@ -1,11 +1,15 @@
 package io.github.cursospringboot.libraryapi.repository;
 
 import io.github.cursospringboot.libraryapi.model.Autor;
+import io.github.cursospringboot.libraryapi.model.GeneroLivro;
+import io.github.cursospringboot.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +19,9 @@ public class AutorRepositoryTest {
 
     @Autowired
     AutorRepository autorRepository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     public void salvarTeste(){
@@ -68,5 +75,38 @@ public class AutorRepositoryTest {
         Autor autorSelecionado = autorRepository.findById(id).get();
 
         autorRepository.delete(autorSelecionado);
+    }
+
+    @Test
+    public void salvarAutorComLivros(){
+        Autor autor = new Autor();
+        autor.setNome("Dan Hartel");
+        autor.setNacionalidade("Americano");
+        autor.setDataNascimento(LocalDate.of(1985, 2, 15));
+
+        Livro livro = new Livro();
+        livro.setIsbn("28576-19237");
+        livro.setPreco(BigDecimal.valueOf(115));
+        livro.setGenero(GeneroLivro.BIOGRAFIA);
+        livro.setTitulo("Buy Back your Time");
+        livro.setDataPublicacao(LocalDate.of(2020,9,11));
+        livro.setAutor(autor);
+
+        Livro livro2 = new Livro();
+        livro2.setIsbn("24178-98734");
+        livro2.setPreco(BigDecimal.valueOf(98));
+        livro2.setGenero(GeneroLivro.BIOGRAFIA);
+        livro2.setTitulo("Software as a service");
+        livro2.setDataPublicacao(LocalDate.of(2024,11,7));
+        livro2.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livro);
+        autor.getLivros().add(livro2);
+
+        autorRepository.save(autor);
+
+        livroRepository.saveAll(autor.getLivros());
+
     }
 }

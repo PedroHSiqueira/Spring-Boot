@@ -79,19 +79,18 @@ public class LivroRepositoryTest {
   public void atualizarTest(){
       UUID id = UUID.fromString("7345511f-26b6-4946-b2ce-41a088a034f1");
 
-      Optional<Livro> livroSelecionado = livroRepository.findById(id);
+      Livro livroSelecionado = livroRepository.findById(id).orElse(null);
 
-      if (livroSelecionado.isPresent()){
-          Livro livroAtualizado = livroSelecionado.get();
+      if (livroSelecionado != null){
 
           System.out.println("Atualização dos Dados");
-          System.out.println("Preco Anterior: " + livroAtualizado.getPreco());
+          System.out.println("Preco Anterior: " + livroSelecionado.getPreco());
 
-          livroAtualizado.setPreco(BigDecimal.valueOf(105));
+          livroSelecionado.setPreco(BigDecimal.valueOf(105));
 
-          livroRepository.save(livroAtualizado);
+          livroRepository.save(livroSelecionado);
 
-          System.out.println("Preco Atualizado: " + livroAtualizado.getPreco());
+          System.out.println("Preco Atualizado: " + livroSelecionado.getPreco());
       }
   }
 
