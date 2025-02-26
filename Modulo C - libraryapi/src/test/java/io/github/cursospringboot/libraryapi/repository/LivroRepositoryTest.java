@@ -35,7 +35,6 @@ public class LivroRepositoryTest {
       Autor autor = autorRepository.findById(UUID.fromString("82e0efac-177a-4de6-a2d9-cf98f29c7449")).orElse(null);
 
       livro.setAutor(autor);
-
       livroRepository.save(livro);
   }
 
@@ -104,9 +103,7 @@ public class LivroRepositoryTest {
 
       if (livroParaAtualizar.isPresent() && novoAutor.isPresent()){
           Livro livroBanco = livroParaAtualizar.get();
-
           livroBanco.setAutor(novoAutor.get());
-
           livroRepository.save(livroBanco);
       }
   }
@@ -115,5 +112,16 @@ public class LivroRepositoryTest {
   public void deletarTest(){
       UUID idLivro = UUID.fromString("40e939e5-9157-4848-99cf-c75b7390b1f9");
       livroRepository.deleteById(idLivro);
+  }
+
+  @Test
+    public void listarLivrosAutor(){
+      UUID uuid = UUID.fromString("ac1c7b3e-c993-4ba8-90b3-6a38b7db6562");
+      Autor autor = autorRepository.findById(uuid).get();
+
+      List<Livro> livrosAutor = livroRepository.findByAutor(autor);
+      autor.setLivros(livrosAutor);
+
+      autor.getLivros().forEach(System.out::println);
   }
 }
