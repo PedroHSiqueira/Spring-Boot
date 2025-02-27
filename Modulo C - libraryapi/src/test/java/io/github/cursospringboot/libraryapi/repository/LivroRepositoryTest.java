@@ -115,7 +115,7 @@ public class LivroRepositoryTest {
   }
 
   @Test
-    public void listarLivrosAutor(){
+    public void listarLivrosAutorTest(){
       UUID uuid = UUID.fromString("ac1c7b3e-c993-4ba8-90b3-6a38b7db6562");
       Autor autor = autorRepository.findById(uuid).get();
 
@@ -124,4 +124,29 @@ public class LivroRepositoryTest {
 
       autor.getLivros().forEach(System.out::println);
   }
+
+  @Test
+  public void buscarLivroPorTituloTest(){
+      List<Livro> livros = livroRepository.findByTitulo("Buy Back your Time");
+      livros.forEach(System.out::println);
+  }
+
+  @Test
+  public void buscarLivroPorIsbnTest(){
+      List<Livro> livros = livroRepository.findByIsbn("28576-19237");
+      livros.forEach(System.out::println);
+  }
+
+  @Test
+  public void buscarLivroPorTituloPrecoTest(){
+      List<Livro> livros = livroRepository.findByTituloAndPreco("Buy Back your Time", BigDecimal.valueOf(115.00));
+      livros.forEach(System.out::println);
+  }
+
+  @Test
+  public void buscarLivroPorTituloOuIsbnTest(){
+      List<Livro> livros = livroRepository.findByTituloOrIsbn("Buy Back your Time", "28576-19237");
+      livros.forEach(System.out::println);
+  }
+
 }
