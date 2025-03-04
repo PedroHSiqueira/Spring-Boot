@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16.6
+    ports:
+      - "5432:5432"
+    container_name: db_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: library
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "15435:80"
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      POSTGRES_DB: library
+    links:
+      - postgres
