@@ -167,4 +167,10 @@ public class LivroRepositoryTest {
       resultado.forEach(System.out::println);
   }
 
-}
+  @Test
+  public void listarLivroQueryParamTest(){
+      List<Livro> resultado = livroRepository.findByGenero(GeneroLivro.BIOGRAFIA, "preco");
+      resultado.forEach(System.out::println);
+  }
+
+  }
