@@ -149,4 +149,22 @@ public class LivroRepositoryTest {
       livros.forEach(System.out::println);
   }
 
+  @Test
+  public void listarLivrosComQueryJpql(){
+      List<Livro> resultado = livroRepository.buscarTodosOrdenadoTituloAndPreco();
+      resultado.forEach(System.out::println);
+  }
+
+  @Test
+  public void listarAutoresComQueryJpql(){
+      List<Autor> resultado = livroRepository.buscarAutoresLivros();
+      resultado.forEach(System.out::println);
+  }
+
+  @Test
+  public void listarNomesDiferentesLivros(){
+      List<String> resultado = livroRepository.listarNomesDiferentesLivros();
+      resultado.forEach(System.out::println);
+  }
+
 }
