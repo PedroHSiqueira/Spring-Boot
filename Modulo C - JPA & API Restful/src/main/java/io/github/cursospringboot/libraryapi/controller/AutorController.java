@@ -2,11 +2,7 @@ package io.github.cursospringboot.libraryapi.controller;
 
 import io.github.cursospringboot.libraryapi.controller.dto.AutorDTO;
 import io.github.cursospringboot.libraryapi.model.Autor;
-import io.github.cursospringboot.libraryapi.repository.AutorRepository;
 import io.github.cursospringboot.libraryapi.service.AutorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,8 +14,11 @@ import java.util.List;
 @RequestMapping("/autores")
 public class AutorController {
 
-    @Autowired
-    AutorService autorService;
+    private final AutorService autorService;
+
+    public AutorController(AutorService autorService) {
+        this.autorService = autorService;
+    }
 
     @PostMapping
     public ResponseEntity<Void> salvar(@RequestBody AutorDTO autor){

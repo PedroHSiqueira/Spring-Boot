@@ -9,6 +9,7 @@ spring:
   jpa:
     show-sql: true # Mostra o Sql No terminal
     hibernate:
-      ddl-auto: update # Atualiza/Cria o banco automaticamente baseado no código
+      ddl-auto: none # Atualiza/Cria o banco automaticamente baseado no código
+#      ddl-auto: update
     properties:
       hibernate.format_sql: true
