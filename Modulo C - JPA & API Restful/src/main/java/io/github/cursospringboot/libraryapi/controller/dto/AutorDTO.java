@@ -3,9 +3,10 @@ package io.github.cursospringboot.libraryapi.controller.dto;
 import io.github.cursospringboot.libraryapi.model.Autor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 //Data-Transfer-Object
-public record AutorDTO(String nome, LocalDate dataNascimento, String nacionalidade) {
+public record AutorDTO(UUID id, String nome, LocalDate dataNascimento, String nacionalidade) {
 
     public Autor mapearAutor(){
         Autor autor = new Autor();
