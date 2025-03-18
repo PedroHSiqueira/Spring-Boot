@@ -49,11 +49,6 @@ public class AutorController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping
-    public List<Autor> listarAutores(){
-        return autorService.getAutores();
-    }
-
     @DeleteMapping("{id}")
     public ResponseEntity<Void> exclusao(@PathVariable("id") String id){
         UUID idAutor = UUID.fromString(id);

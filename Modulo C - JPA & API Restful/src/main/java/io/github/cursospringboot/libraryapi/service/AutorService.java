@@ -12,8 +12,11 @@ import java.util.UUID;
 @Service
 public class AutorService {
 
-    @Autowired
     AutorRepository autorRepository;
+
+    public AutorService(AutorRepository autorRepository) {
+        this.autorRepository = autorRepository;
+    }
 
     public Autor salvar(Autor autor){
         return autorRepository.save(autor);
