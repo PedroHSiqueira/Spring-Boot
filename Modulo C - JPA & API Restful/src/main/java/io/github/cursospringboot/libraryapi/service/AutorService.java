@@ -18,19 +18,31 @@ public class AutorService {
         this.autorRepository = autorRepository;
     }
 
-    public Autor salvar(Autor autor){
+    public Autor salvar(Autor autor) {
         return autorRepository.save(autor);
     }
 
-    public Optional<Autor> obterPorId (UUID id){
+    public Optional<Autor> obterPorId(UUID id) {
         return autorRepository.findById(id);
     }
 
-    public List<Autor> getAutores(){
+    public List<Autor> pesquisa(String nome, String nacionalidade) {
+        if (nome != null && nacionalidade != null) {
+            return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
+        }
+
+        if (nome != null) {
+            return autorRepository.findByNomeContaining(nome);
+        }
+
+        if (nacionalidade != null) {
+            return autorRepository.findByNacionalidade(nacionalidade);
+        }
+
         return autorRepository.findAll();
     }
 
-    public void deletar(Autor autor){
+    public void deletar(Autor autor) {
         autorRepository.delete(autor);
     }
 }

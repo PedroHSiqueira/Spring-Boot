@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/autores")
@@ -23,7 +24,7 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody AutorDTO autor){
+    public ResponseEntity<Void> salvar(@RequestBody AutorDTO autor) {
         Autor autorEntity = autor.mapearAutor();
         autorService.salvar(autorEntity);
 
@@ -38,10 +39,10 @@ public class AutorController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AutorDTO> obterDetalhes(@PathVariable("id") String id){
+    public ResponseEntity<AutorDTO> obterDetalhes(@PathVariable("id") String id) {
         UUID idAutor = UUID.fromString(id);
         Optional<Autor> buscaAutor = autorService.obterPorId(idAutor);
-        if (buscaAutor.isPresent()){
+        if (buscaAutor.isPresent()) {
             Autor autor = buscaAutor.get();
             AutorDTO dto = new AutorDTO(autor.getId(), autor.getNome(), autor.getDataNascimento(), autor.getNacionalidade());
             return ResponseEntity.ok(dto);
@@ -49,12 +50,19 @@ public class AutorController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<AutorDTO>> pesquisar(@RequestParam(value = "nome", required = false) String nome,@RequestParam(value = "nacionalidade", required = false) String nacionalidade){
+      List<Autor> resultado = autorService.pesquisa(nome, nacionalidade);
+      List<AutorDTO> lista = resultado.stream().map(autor -> new AutorDTO(autor.getId(), autor.getNome(), autor.getDataNascimento(), autor.getNacionalidade())).toList();
+      return ResponseEntity.ok(lista);
+    }
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> exclusao(@PathVariable("id") String id){
+    public ResponseEntity<Void> exclusao(@PathVariable("id") String id) {
         UUID idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
-        if (autorOptional.isEmpty()){
+        if (autorOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
