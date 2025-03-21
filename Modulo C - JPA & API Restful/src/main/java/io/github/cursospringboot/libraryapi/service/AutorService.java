@@ -2,6 +2,7 @@ package io.github.cursospringboot.libraryapi.service;
 
 import io.github.cursospringboot.libraryapi.model.Autor;
 import io.github.cursospringboot.libraryapi.repository.AutorRepository;
+import io.github.cursospringboot.libraryapi.validator.AutorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,16 @@ import java.util.UUID;
 @Service
 public class AutorService {
 
-    AutorRepository autorRepository;
+    private final AutorRepository autorRepository;
+    private final AutorValidator autorValidator;
 
-    public AutorService(AutorRepository autorRepository) {
+    public AutorService(AutorRepository autorRepository, AutorValidator validator) {
         this.autorRepository = autorRepository;
+        this.autorValidator = validator;
     }
 
     public Autor salvar(Autor autor) {
+        autorValidator.validar(autor);
         return autorRepository.save(autor);
     }
 
@@ -26,6 +30,7 @@ public class AutorService {
         if (autor.getId() == null){
             throw new IllegalArgumentException("O autor precisa estar cadastrado antes da atualização!");
         }
+        autorValidator.validar(autor);
         autorRepository.save(autor);
     }
 
