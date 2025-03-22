@@ -3,6 +3,7 @@ package io.github.cursospringboot.libraryapi.controller;
 import io.github.cursospringboot.libraryapi.controller.dto.AutorDTO;
 import io.github.cursospringboot.libraryapi.controller.dto.ErroCampo;
 import io.github.cursospringboot.libraryapi.controller.dto.ErroResposta;
+import io.github.cursospringboot.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.cursospringboot.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.cursospringboot.libraryapi.model.Autor;
 import io.github.cursospringboot.libraryapi.service.AutorService;
@@ -66,25 +67,32 @@ public class AutorController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable("id") String id, @RequestBody AutorDTO autorDTO){
-        UUID uuid = UUID.fromString(id);
-        Optional<Autor> autorOptional = autorService.obterPorId(uuid);
+    public ResponseEntity<Object> atualizar(@PathVariable("id") String id, @RequestBody AutorDTO autorDTO){
+        try {
+            UUID uuid = UUID.fromString(id);
+            Optional<Autor> autorOptional = autorService.obterPorId(uuid);
 
-        if (autorOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            if (autorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Autor autor = autorOptional.get();
+            autor.setNome(autorDTO.nome());
+            autor.setDataNascimento(autorDTO.dataNascimento());
+            autor.setNacionalidade(autorDTO.nacionalidade());
+
+            autorService.atualizar(autor);
+            return ResponseEntity.noContent().build();
+        } catch (RegistroDuplicadoException e) {
+            ErroResposta erroDto = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
         }
-
-        Autor autor = autorOptional.get();
-        autor.setNome(autorDTO.nome());
-        autor.setDataNascimento(autorDTO.dataNascimento());
-        autor.setNacionalidade(autorDTO.nacionalidade());
-
-        autorService.atualizar(autor);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> exclusao(@PathVariable("id") String id) {
+    public ResponseEntity<Object> exclusao(@PathVariable("id") String id) {
+        try {
+
         UUID idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
@@ -94,6 +102,10 @@ public class AutorController {
 
         autorService.deletar(autorOptional.get());
         return ResponseEntity.noContent().build();
+        }catch (OperacaoNaoPermitidaException e){
+            ErroResposta erroDto = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
+        }
     }
 
 }

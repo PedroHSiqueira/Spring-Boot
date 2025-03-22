@@ -23,7 +23,7 @@ public class AutorValidator {
     }
 
     public boolean existeAutoCadastrado(Autor autor){
-        Optional<Autor> constaDatabase = autorRepository.findByNomeAnddataNascimentoAndNacionalidade(autor.getNome(), autor.getDataNascimento(), autor.getNacionalidade());
+        Optional<Autor> constaDatabase = autorRepository.findByNomeAndDataNascimentoAndNacionalidade(autor.getNome(), autor.getDataNascimento(), autor.getNacionalidade());
         if (autor.getId() == null){
             return constaDatabase.isPresent();
         }
