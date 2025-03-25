@@ -49,6 +49,7 @@ public class Livro {
     @Column(name = "id_usuario")
     private UUID idUsuario;
 
+
     @ManyToOne //(cascade = CascadeType.ALL) // Muitos livros para 1 autor
     @JoinColumn(name = "id_autor") // Relacionamento
     private Autor autor;
